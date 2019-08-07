@@ -90,6 +90,9 @@ public class ClassFactory {
      * @param ctClass javassist's compile-time class
      * @return defined class
      *
+     * @throws IOException if an Input/Output problem occurs while defining a class
+     * @throws CannotCompileException if one of the compile-time classes cannot be compiled
+     *
      * @see #defineGCClass(String, byte[])
      * @see #defineGCClasses(Map)
      * @see #defineGCClasses(CtClass...)
@@ -105,6 +108,9 @@ public class ClassFactory {
      *
      * @param classes javassist's compile-time classes
      * @return defined classes in the order their data was passed
+     *
+     * @throws IOException if an Input/Output problem occurs while defining a class
+     * @throws CannotCompileException if one of the compile-time classes cannot be compiled
      *
      * @see #defineGCClass(String, byte[])
      * @see #defineGCClasses(CtClass...)
@@ -127,7 +133,7 @@ public class ClassFactory {
     /**
      * Temporary classloader which should be instantiated for groups of related classes which may be unloaded.
      */
-    private class TmpClassLoader extends ClassLoader {
+    private static class TmpClassLoader extends ClassLoader {
 
         /**
          * Defines a class by the given bytecode.

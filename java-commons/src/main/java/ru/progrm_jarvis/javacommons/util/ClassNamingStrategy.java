@@ -33,7 +33,7 @@ public interface ClassNamingStrategy extends Supplier<String> {
     static boolean classExists(@NonNull final String className) {
         try {
             // use null check instead of simple `return true` in case the method contract changes
-            return Class.forName(className) != null;
+            return Class.forName(className, false, Thread.currentThread().getContextClassLoader()) != null;
         } catch (final ClassNotFoundException e) {
             return false;
         }
@@ -44,6 +44,8 @@ public interface ClassNamingStrategy extends Supplier<String> {
      * This strategy will append numeric IDs to the given base name.
      *
      * @param baseName base name of the generated class names to which the ID should be appended
+     *
+     * @return created paginated class naming strategy
      */
     static PaginatedClassNamingStrategy createPaginated(@NonNull final String baseName) {
         return new PaginatedClassNamingStrategy(baseName);
